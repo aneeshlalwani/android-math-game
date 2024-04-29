@@ -29,15 +29,3 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun FirstPage() {
-
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    MathGameTheme {
-        FirstPage()
-    }
-}
