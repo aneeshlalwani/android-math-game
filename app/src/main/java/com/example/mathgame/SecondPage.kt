@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -22,6 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -48,8 +50,8 @@ fun SecondPage (navController: NavController, category : String) {
                 )
                         },
                 colors = TopAppBarDefaults.smallTopAppBarColors(
-                    container = colorResource(id = R.color.blue),
-                    titleContentColor = Color.white,
+                    containerColor = colorResource(id = R.color.blue),
+                    titleContentColor = Color.White,
                     navigationIconContentColor = Color.White,
 
                 )
@@ -62,9 +64,11 @@ fun SecondPage (navController: NavController, category : String) {
                 .paint(painter = painterResource(id = R.drawable.second), contentScale = ContentScale.FillBounds),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                    
+
             }
         }
 
     )
 }
+
+
