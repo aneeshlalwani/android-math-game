@@ -1,7 +1,12 @@
 package com.example.mathgame
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
@@ -13,13 +18,18 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -31,6 +41,13 @@ fun SecondPage (navController: NavController, category : String) {
 
     val systemUIController = rememberSystemUiController()
     systemUIController.setStatusBarColor(color = colorResource(id = R.color.blue))
+
+    val life = remember { mutableIntStateOf(3) }
+    val score = remember { mutableIntStateOf(0) }
+    val remainingTimeText = remember { mutableStateOf("3") }
+    val myQuestion = remember { mutableStateOf("") }
+    val myAnswer = remember { mutableStateOf("") }
+    val isEnabled = remember { mutableStateOf(true) }
 
     Scaffold (
         topBar = {
@@ -53,7 +70,6 @@ fun SecondPage (navController: NavController, category : String) {
                     containerColor = colorResource(id = R.color.blue),
                     titleContentColor = Color.White,
                     navigationIconContentColor = Color.White,
-
                 )
             )
         },
@@ -61,9 +77,37 @@ fun SecondPage (navController: NavController, category : String) {
             Column(modifier = Modifier
                 .fillMaxSize()
                 .padding(it)
-                .paint(painter = painterResource(id = R.drawable.second), contentScale = ContentScale.FillBounds),
+                .paint(
+                    painter = painterResource(id = R.drawable.second),
+                    contentScale = ContentScale.FillBounds
+                ),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                Spacer(modifier = Modifier.height(20.dp))
+                Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceEvenly) {
+                    Text(text="Life: ", fontSize = 16.sp, color = Color.White)
+                    Text(text= life.value.toString(), fontSize = 16.sp, color = Color.White)
+                    Text(text="Score: ", fontSize = 16.sp, color = Color.White)
+                    Text(text=score.value.toString(), fontSize = 16.sp, color = Color.White)
+                    Text(text="Remaining Time: ", fontSize = 16.sp, color = Color.White)
+                    Text(text=remainingTimeText.value, fontSize = 16.sp, color = Color.White)
+                }
+                
+                Spacer(modifier = Modifier.height(30.dp))
+                
+                TextForQuestion(text = myQuestion.value)
+                Spacer(modifier = Modifier.height(15.dp))
+                AnswerField(text = myAnswer)
+                Spacer(modifier = Modifier.height(15.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    ButtonOkNext(buttonText = "OK", myOnClick = { isEnabled.value = false }, isEnabled =isEnabled.value )
+                    ButtonOkNext(buttonText = "NEXT", myOnClick = { isEnabled.value = true }, isEnabled =true )
+                }
 
             }
         }

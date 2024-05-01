@@ -43,7 +43,6 @@ fun MyNavigation() {
         ){
             FirstPage(navController = navController)
         }
-
         composable(
             route = "SecondPage/{category}",
             arguments = listOf(
