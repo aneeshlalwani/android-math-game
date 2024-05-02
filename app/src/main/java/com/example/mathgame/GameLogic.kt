@@ -2,7 +2,7 @@ package com.example.mathgame
 
 import kotlin.random.Random
 
-fun generateQuestion(selectedCategory: String){
+fun generateQuestion(selectedCategory: String) : ArrayList<Any> {
 
     var randomNumberOne = Random.nextInt(0, 100);
     var randomNumberTwo = Random.nextInt(0, 100);
@@ -49,4 +49,10 @@ fun generateQuestion(selectedCategory: String){
         }
     }
 
+//    Returning Logic Result
+    val gameResultList = ArrayList<Any>()
+    gameResultList.add(textQuestion)
+    gameResultList.add(correctAnswer)
+
+    return  gameResultList
 }
