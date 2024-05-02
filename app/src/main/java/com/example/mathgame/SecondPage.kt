@@ -1,5 +1,6 @@
 package com.example.mathgame
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -48,6 +50,16 @@ fun SecondPage (navController: NavController, category : String) {
     val myQuestion = remember { mutableStateOf("") }
     val myAnswer = remember { mutableStateOf("") }
     val isEnabled = remember { mutableStateOf(true) }
+    val correctAnswer = remember { mutableIntStateOf(0) }
+
+//    implemented launch effect to avoid infinite question generation
+    LaunchedEffect(key1 = "math", block = {
+        val resultList = generateQuestion(category)
+        myQuestion.value = resultList[0].toString()
+        correctAnswer.value = resultList[1].toString().toInt()
+
+        Log.d("question", myQuestion.value) // Debugging statement
+    })
 
     Scaffold (
         topBar = {
