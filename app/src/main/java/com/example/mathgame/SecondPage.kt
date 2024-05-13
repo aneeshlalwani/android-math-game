@@ -1,6 +1,8 @@
 package com.example.mathgame
 
+import android.os.CountDownTimer
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,12 +31,14 @@ import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.modifier.modifierLocalConsumer
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import java.util.Locale
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -44,6 +48,7 @@ fun SecondPage (navController: NavController, category : String) {
     val systemUIController = rememberSystemUiController()
     systemUIController.setStatusBarColor(color = colorResource(id = R.color.blue))
 
+    val myContext = LocalContext.current
     val life = remember { mutableIntStateOf(3) }
     val score = remember { mutableIntStateOf(0) }
     val remainingTimeText = remember { mutableStateOf("3") }
@@ -117,8 +122,42 @@ fun SecondPage (navController: NavController, category : String) {
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    ButtonOkNext(buttonText = "OK", myOnClick = { isEnabled.value = false }, isEnabled =isEnabled.value )
-                    ButtonOkNext(buttonText = "NEXT", myOnClick = { isEnabled.value = true }, isEnabled =true )
+                    ButtonOkNext(
+                        buttonText = "OK",
+                        myOnClick = {
+
+                            if(myAnswer.value.isEmpty()){
+                                Toast.makeText(myContext, "Write an answer or click the next button", Toast.LENGTH_SHORT).show()
+                            } else {
+                                isEnabled.value = false
+                                if(myAnswer.value.toInt() == correctAnswer.value){
+                                    score.value += 10
+                                    myQuestion.value = "Congratulations🥳"
+                                    myAnswer.value = ""
+                                } else {
+                                    life.value -= 1
+                                    myQuestion.value = "Op's, Wrong Answer"
+                                }
+                            }
+                                    },
+                        isEnabled =isEnabled.value
+                    )
+                    ButtonOkNext(
+                        buttonText = "NEXT",
+                        myOnClick = {
+
+                            if(life.value === 0){
+                                Toast.makeText(myContext, "Game Over!", Toast.LENGTH_SHORT).show()
+                            } else {
+                                val newResultList = generateQuestion(category)
+                                myQuestion.value = newResultList[0].toString()
+                                correctAnswer.value = newResultList[1].toString().toInt()
+                                myAnswer.value = ""
+                                isEnabled.value = true
+                            }
+                                    },
+                        isEnabled =true
+                    )
                 }
 
             }
