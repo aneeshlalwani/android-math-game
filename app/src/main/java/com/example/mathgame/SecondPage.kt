@@ -57,6 +57,25 @@ fun SecondPage (navController: NavController, category : String) {
     val isEnabled = remember { mutableStateOf(true) }
     val correctAnswer = remember { mutableIntStateOf(0) }
 
+    val totalTimeInMillis = remember { mutableIntStateOf(30000) }
+
+    // Timer
+    val timer = remember {
+        mutableStateOf(
+            object: CountDownTimer(totalTimeInMillis.value.toLong(), 1000){
+                override fun onTick(millisUntilFinished: Long) {
+                    remainingTimeText.value = String.format(Locale.getDefault(), "%02d", millisUntilFinished/1000 )
+                }
+
+                override fun onFinish() {
+                    cancel()
+                    myQuestion.value = "Sorry, Time is up!"
+                    life.value -= 1
+                    isEnabled.value = false
+                }
+            }.start()
+        )
+    }
 //    implemented launch effect to avoid infinite question generation
     LaunchedEffect(key1 = "math", block = {
         val resultList = generateQuestion(category)
@@ -129,6 +148,7 @@ fun SecondPage (navController: NavController, category : String) {
                             if(myAnswer.value.isEmpty()){
                                 Toast.makeText(myContext, "Write an answer or click the next button", Toast.LENGTH_SHORT).show()
                             } else {
+                                timer.value.cancel()
                                 isEnabled.value = false
                                 if(myAnswer.value.toInt() == correctAnswer.value){
                                     score.value += 10
@@ -145,6 +165,9 @@ fun SecondPage (navController: NavController, category : String) {
                     ButtonOkNext(
                         buttonText = "NEXT",
                         myOnClick = {
+
+                            timer.value.cancel()
+                            timer.value.start()
 
                             if(life.value === 0){
                                 Toast.makeText(myContext, "Game Over!", Toast.LENGTH_SHORT).show()
