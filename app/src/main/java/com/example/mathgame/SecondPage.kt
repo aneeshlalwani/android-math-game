@@ -171,6 +171,10 @@ fun SecondPage (navController: NavController, category : String) {
 
                             if(life.value === 0){
                                 Toast.makeText(myContext, "Game Over!", Toast.LENGTH_SHORT).show()
+//                                open the result page
+                                navController.navigate("ResultPage/${score.value}"){
+                                    popUpTo("FirstPage"){inclusive = false}
+                                }
                             } else {
                                 val newResultList = generateQuestion(category)
                                 myQuestion.value = newResultList[0].toString()
