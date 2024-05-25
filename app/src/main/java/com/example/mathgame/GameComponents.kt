@@ -33,7 +33,7 @@ fun TextForQuestion(text: String){
         color = Color.White,
         textAlign = TextAlign.Center,
         modifier = Modifier
-            .background(color = colorResource(id = R.color.blue))
+            .background(color = colorResource(id = R.color.dark_gray))
             .size(300.dp, 75.dp)
             .wrapContentHeight()
         )
@@ -41,28 +41,31 @@ fun TextForQuestion(text: String){
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AnswerField(text: MutableState<String>){
-
+fun AnswerField(text: MutableState<String>) {
     TextField(
         value = text.value,
         onValueChange = { text.value = it },
-        label = { Text(text = "Enter your answer...")},
+        label = { Text(text = "Enter your answer", color = Color.White) }, // Label color
         colors = TextFieldDefaults.textFieldColors(
+            focusedTextColor = Color.White, // Set text color to white
             focusedLabelColor = Color.White,
             unfocusedLabelColor = Color.White,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
-            containerColor = colorResource(id = R.color.blue),
-//            textColor = Color.White,
+            containerColor = colorResource(id = R.color.dark_gray),
             cursorColor = Color.White
         ),
-
         modifier = Modifier.size(300.dp, 75.dp),
-        textStyle = TextStyle(fontSize = 24.sp, textAlign = TextAlign.Center),
+        textStyle = TextStyle(
+            fontSize = 24.sp,
+            color = Color.White, // Ensure the text style also has white color
+            textAlign = TextAlign.Center
+        ),
         shape = RoundedCornerShape(0),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
     )
 }
+
 
 @Composable
 fun ButtonOkNext(buttonText: String, myOnClick:() -> Unit, isEnabled : Boolean){
@@ -70,12 +73,12 @@ fun ButtonOkNext(buttonText: String, myOnClick:() -> Unit, isEnabled : Boolean){
         onClick = myOnClick,
         enabled = isEnabled,
         colors = ButtonDefaults.buttonColors(
-          containerColor = Color.White
+          containerColor = colorResource(id = R.color.teal_700)
         ),
         shape = RoundedCornerShape(5.dp),
-        border = BorderStroke(2.dp, color = colorResource(id = R.color.blue)),
+        border = BorderStroke(2.dp, color = colorResource(id = R.color.teal_700)),
         modifier = Modifier.width(150.dp)
     ) {
-        Text(text = buttonText, fontSize = 24.sp, color= colorResource(id = R.color.blue))
+        Text(text = buttonText, fontSize = 24.sp, color= colorResource(id = R.color.white))
     }
 }

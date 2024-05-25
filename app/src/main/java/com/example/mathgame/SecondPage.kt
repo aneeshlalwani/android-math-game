@@ -3,6 +3,7 @@ package com.example.mathgame
 import android.os.CountDownTimer
 import android.util.Log
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -34,6 +35,7 @@ import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -46,7 +48,7 @@ import java.util.Locale
 fun SecondPage (navController: NavController, category : String) {
 
     val systemUIController = rememberSystemUiController()
-    systemUIController.setStatusBarColor(color = colorResource(id = R.color.blue))
+    systemUIController.setStatusBarColor(color = colorResource(id = R.color.dark_blue))
 
     val myContext = LocalContext.current
     val life = remember { mutableIntStateOf(3) }
@@ -99,11 +101,11 @@ fun SecondPage (navController: NavController, category : String) {
                     "sub" -> "Subtraction"
                     "multi" -> "Multiplication"
                     else -> "Division"
-                }, fontSize = 20.sp
+                }, fontSize = 24.sp, fontWeight = FontWeight.Bold
                 )
                         },
                 colors = TopAppBarDefaults.smallTopAppBarColors(
-                    containerColor = colorResource(id = R.color.blue),
+                    containerColor = colorResource(id = R.color.dark_blue),
                     titleContentColor = Color.White,
                     navigationIconContentColor = Color.White,
                 )
@@ -113,23 +115,32 @@ fun SecondPage (navController: NavController, category : String) {
             Column(modifier = Modifier
                 .fillMaxSize()
                 .padding(it)
+//                .background(color = colorResource(id = R.color.lavender)),
                 .paint(
-                    painter = painterResource(id = R.drawable.second),
+                    painter = painterResource(id = R.drawable.fifth),
                     contentScale = ContentScale.FillBounds
                 ),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Spacer(modifier = Modifier.height(20.dp))
-                Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceEvenly) {
-                    Text(text="Life: ", fontSize = 16.sp, color = Color.White)
-                    Text(text= life.value.toString(), fontSize = 16.sp, color = Color.White)
-                    Text(text="Score: ", fontSize = 16.sp, color = Color.White)
-                    Text(text=score.value.toString(), fontSize = 16.sp, color = Color.White)
-                    Text(text="Remaining Time: ", fontSize = 16.sp, color = Color.White)
-                    Text(text=remainingTimeText.value, fontSize = 16.sp, color = Color.White)
+                Spacer(modifier = Modifier.height(0.dp))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(color = colorResource(id = R.color.dark_blue))
+                        .padding(top = 20.dp, bottom = 16.dp), // Add bottom padding here
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    Text(text = "Life: ", fontSize = 18.sp, color = Color.White)
+                    Text(text = life.value.toString(), fontSize = 18.sp, color = Color.White)
+                    Text(text = "Score: ", fontSize = 18.sp, color = Color.White)
+                    Text(text = score.value.toString(), fontSize = 18.sp, color = Color.White)
+                    Text(text = "Remaining Time: ", fontSize = 18.sp, color = Color.White)
+                    Text(text = remainingTimeText.value, fontSize = 18.sp, color = Color.White)
                 }
-                
-                Spacer(modifier = Modifier.height(30.dp))
+
+
+                Spacer(modifier = Modifier.height(50.dp))
                 
                 TextForQuestion(text = myQuestion.value)
                 Spacer(modifier = Modifier.height(15.dp))

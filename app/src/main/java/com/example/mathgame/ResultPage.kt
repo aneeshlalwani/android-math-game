@@ -40,30 +40,52 @@ fun ResultPage(navController: NavController, score: Int) {
         modifier = Modifier
             .fillMaxSize()
             .paint(
-                painter = painterResource(id = R.drawable.second),
+                painter = painterResource(id = R.drawable.third),
                 contentScale = ContentScale.FillBounds
             ),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Spacer(modifier = Modifier.height(100.dp))
+        Text(
+            text = "Result",
+            fontSize = 34.sp,
+            color = Color.Red,
+            fontWeight = FontWeight.Bold
+        )
+        Spacer(modifier = Modifier.height(50.dp))
+        if(score > 0){
+            Text(
+                text = "Congartulations🥳",
+                fontSize = 34.sp,
+                color = Color.Red,
+                fontWeight = FontWeight.Bold
+            )
+        } else {
+            Text(
+                text = "Try Again😇",
+                fontSize = 34.sp,
+                color = Color.Red,
+                fontWeight = FontWeight.Bold
+            )
+        }
+
         Spacer(modifier = Modifier.height(50.dp))
         Text(
             text = "Your Score: $score",
-            fontSize = 24.sp,
+            fontSize = 34.sp,
             color = Color.Red,
             fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.height(30.dp))
         Text(
             text = "Play Again!",
-            fontSize = 24.sp,
+            fontSize = 32.sp,
             color = Color.Red
         )
-        Spacer(modifier = Modifier.height(100.dp))
-
-        Row(
+        Spacer(modifier = Modifier.height(140.dp))
+        Column(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Button(
                 onClick = {
@@ -71,33 +93,35 @@ fun ResultPage(navController: NavController, score: Int) {
                 },
                 modifier = Modifier.size(150.dp, 60.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = colorResource(id = R.color.green)
+                    containerColor = colorResource(id = R.color.dark_navy)
                 ),
                 shape = RoundedCornerShape(10.dp),
-                border = BorderStroke(2.dp, color = colorResource(id = R.color.blue))
+                border = BorderStroke(2.dp, color = colorResource(id = R.color.black))
             ) {
                 Text(
                     text = "Play Again!",
-                    fontSize = 20.sp,
-                    color = colorResource(id = R.color.blue)
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = colorResource(id = R.color.white)
                 )
             }
-
+            Spacer(modifier = Modifier.height(20.dp))
             Button(
                 onClick = {
                     myContext.finish()
                 },
                 modifier = Modifier.size(150.dp, 60.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = colorResource(id = R.color.green)
+                    containerColor = colorResource(id = R.color.dark_navy)
                 ),
                 shape = RoundedCornerShape(10.dp),
-                border = BorderStroke(2.dp, color = colorResource(id = R.color.blue))
+                border = BorderStroke(2.dp, color = colorResource(id = R.color.black))
             ) {
                 Text(
                     text = "Exit",
-                    fontSize = 20.sp,
-                    color = colorResource(id = R.color.blue)
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = colorResource(id = R.color.white)
                 )
             }
         }
